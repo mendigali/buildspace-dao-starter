@@ -2,7 +2,6 @@ import { ethers } from "ethers";
 import sdk from "./1-initialize-sdk.js";
 import { readFileSync } from "fs";
 
-// 0xD84F9e3e9387c2aC66373AFc70117f10319cc307
 const app = sdk.getAppModule("0xD84F9e3e9387c2aC66373AFc70117f10319cc307");
 
 (async () => {

@@ -4,9 +4,46 @@ body {
   font-family: Inter, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #7700ee;
   color: #fff;
   overflow-x: hidden;
+  background: linear-gradient(222deg, rgb(98, 224, 67),rgb(29, 206, 147), #2392c6, #23286e, #6f23c6, #c623b9);
+  background-size: 800% 800%;
+
+  -webkit-animation: Gradient 20s ease infinite;
+  -moz-animation: Gradient 20s ease infinite;
+  -o-animation: Gradient 20s ease infinite;
+  animation: Gradient 20s ease infinite;
+}
+
+.gradient {
+  background: linear-gradient(222deg, #23286e, #2392c6, #6f23c6, #c623b9);
+  background-size: 800% 800%;
+
+  -webkit-animation: Gradient 20s ease infinite;
+  -moz-animation: Gradient 20s ease infinite;
+  -o-animation: Gradient 20s ease infinite;
+  animation: Gradient 20s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+  0%{background-position:0% 87%}
+  50%{background-position:100% 14%}
+  100%{background-position:0% 87%}
+}
+@-moz-keyframes Gradient {
+  0%{background-position:0% 87%}
+  50%{background-position:100% 14%}
+  100%{background-position:0% 87%}
+}
+@-o-keyframes Gradient {
+  0%{background-position:0% 87%}
+  50%{background-position:100% 14%}
+  100%{background-position:0% 87%}
+}
+@keyframes Gradient {
+  0%{background-position:0% 87%}
+  50%{background-position:100% 14%}
+  100%{background-position:0% 87%}
 }
 #root {
   min-height: 100vh;
@@ -15,6 +52,7 @@ body {
 
 h1 {
   font-size: 5rem;
+  margin-bottom: 0;
 }
 @media screen and (max-width: 768px) {
   h1 {
@@ -51,7 +89,7 @@ h1 {
   max-width: calc(100% - 1rem);
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  margin: auto;
+  margin: 0 auto;
   align-content: center;
   display: flex;
   text-align: center;
@@ -93,7 +131,7 @@ h1 {
 
 .member-page form h5 {
   margin-top: 0;
-  color: #7700ee;
+  color: #1e1449;
 }
 
 .member-page form .card > div {
@@ -118,21 +156,22 @@ button {
   cursor: pointer;
   background-color: #000;
   color: #fff;
-  border: none;
+  border: #000 2px solid;
   font-weight: bold;
   font-family: inherit;
   padding: 1.2rem 2rem;
   text-transform: uppercase;
-  border-radius: 3rem;
+  border-radius: .7rem;
   font-size: 1.2rem;
 }
 
 button:hover {
-  background-color: #121212;
+  background: none;
+  border: #000 2px solid;
 }
 
 button:focus {
-  background-color: #222;
+  background-color: rgb(56, 56, 56);
 }
 
 button:disabled {
