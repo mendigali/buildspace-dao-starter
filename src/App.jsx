@@ -3,6 +3,13 @@ import { useWeb3 } from "@3rdweb/hooks";
 import { UnsupportedChainIdError } from "@web3-react/core";
 import { useEffect, useMemo, useState } from "react";
 import { ethers } from "ethers";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+if (!process.env.WALLET_ADDRESS || process.env.WALLET_ADDRESS == "") {
+  console.log("Wallet address not found.");
+}
 
 const sdk = new ThirdwebSDK("rinkeby");
 
@@ -28,6 +35,8 @@ const App = () => {
   const [proposals, setProposals] = useState([]);
   const [isVoting, setIsVoting] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
+  const [page, setPage] = useState("menu");
+  const [proposalMessage, setProposalMessage] = useState("");
 
   useEffect(() => {
     if (!hasClaimedNFT) {
@@ -173,7 +182,13 @@ const App = () => {
       <div className="member-page">
         <h1>DauysDAO voting</h1>
         <div>
-          <div>
+          {page == "menu" && <div>
+            <br />
+            <button onClick={() => setPage("members")}>Member List</button>
+            <button onClick={() => setPage("proposals")}>Active Proposals</button>
+            <button onClick={() => setPage("new")}>Create New Proposal</button>
+          </div>}
+          {page == "members" && <div>
             <h2>Member List</h2>
             <table className="card">
               <thead>
@@ -193,8 +208,10 @@ const App = () => {
                 })}
               </tbody>
             </table>
-          </div>
-          <div>
+            <br />
+            <button onClick={() => setPage("menu")}>Back</button>
+          </div>}
+          {page == "proposals" && <div>
             <h2>Active Proposals</h2>
             <form
               onSubmit={async (e) => {
@@ -295,8 +312,55 @@ const App = () => {
                 This will trigger multiple transactions that you will need to
                 sign.
               </small>
+              <button onClick={() => setPage("menu")}>Back</button>
+              <br />
             </form>
-          </div>
+          </div>}
+          {page == "new" && <div>
+            <h2>New Proposal</h2>
+            <form
+              onSubmit={async (e) => {
+                const proposal_description = document.getElementById("proposal_description").value;
+                e.preventDefault();
+                e.stopPropagation();
+                if (proposal_description.length < 1) {
+                  return setProposalMessage("Proposal description is required!");
+                }
+                console.log(proposal_description);
+                try {
+                  setProposalMessage("Wait while proposal is being created...");
+                  const amount = 1;
+                  const newProposalId = await voteModule.propose(proposal_description,
+                    [
+                      {
+                        nativeTokenValue: 0,
+                        transactionData: tokenModule.contract.interface.encodeFunctionData(
+                          "transfer",
+                          [
+                            address,
+                            ethers.utils.parseUnits(amount.toString(), 18),
+                          ]
+                        ),
+
+                        toAddress: tokenModule.address,
+                      },
+                    ]
+                  );
+                  // const newProposal = await voteModule.get(newProposalId);
+                  // setProposals([...proposals, newProposal]);
+                  setPage("menu");
+                } catch (error) {
+                  console.error("Failed to create a new proposal", error);
+                }
+              }}
+            >
+              <input type="text" placeholder="Proposal Description" id="proposal_description" className="card" />
+              {proposalMessage.length > 0 && <small>{proposalMessage}</small>}
+              <button type="submit" id="proposal_btn">Submit</button>
+              <br />
+              <button onClick={() => setPage("menu")}>Back</button>
+            </form>
+          </div>}
         </div>
       </div>
     );
