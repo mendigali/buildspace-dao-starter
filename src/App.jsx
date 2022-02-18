@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-if (!process.env.WALLET_ADDRESS || process.env.WALLET_ADDRESS == "") {
+if (!process.env.WALLET_ADDRESS || process.env.WALLET_ADDRESS === "") {
   console.log("Wallet address not found.");
 }
 
@@ -182,13 +182,13 @@ const App = () => {
       <div className="member-page">
         <h1>DauysDAO voting</h1>
         <div>
-          {page == "menu" && <div>
+          {page === "menu" && <div>
             <br />
             <button onClick={() => setPage("members")}>Member List</button>
             <button onClick={() => setPage("proposals")}>Active Proposals</button>
             <button onClick={() => setPage("new")}>Create New Proposal</button>
           </div>}
-          {page == "members" && <div>
+          {page ==+ "members" && <div>
             <h2>Member List</h2>
             <table className="card">
               <thead>
@@ -211,7 +211,7 @@ const App = () => {
             <br />
             <button onClick={() => setPage("menu")}>Back</button>
           </div>}
-          {page == "proposals" && <div>
+          {page === "proposals" && <div>
             <h2>Active Proposals</h2>
             <form
               onSubmit={async (e) => {
@@ -316,7 +316,7 @@ const App = () => {
               <br />
             </form>
           </div>}
-          {page == "new" && <div>
+          {page === "new" && <div>
             <h2>New Proposal</h2>
             <form
               onSubmit={async (e) => {
@@ -330,7 +330,7 @@ const App = () => {
                 try {
                   setProposalMessage("Wait while proposal is being created...");
                   const amount = 1;
-                  const newProposalId = await voteModule.propose(proposal_description,
+                  await voteModule.propose(proposal_description,
                     [
                       {
                         nativeTokenValue: 0,
