@@ -188,7 +188,7 @@ const App = () => {
             <button onClick={() => setPage("proposals")}>Active Proposals</button>
             <button onClick={() => setPage("new")}>Create New Proposal</button>
           </div>}
-          {page ==+ "members" && <div>
+          {page === "members" && <div>
             <h2>Member List</h2>
             <table className="card">
               <thead>
